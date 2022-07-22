@@ -93,6 +93,7 @@ def get_traffic_stats(data, param1, param2, param3):
 class ContainernetAPI:
     def __init__(self, n_hosts, n_paths, init_costs=None):
         system('clear')
+        system('sudo rm -rf '+DOCKER_VOLUME)
         system('sudo mn -c')
         self.clear_logs()
         self.network = Containernet(controller=RemoteController, switch=OVSSwitch, link=TCLink,

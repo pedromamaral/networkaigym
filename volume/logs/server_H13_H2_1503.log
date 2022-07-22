@@ -1,0 +1,197 @@
+{
+	"start":	{
+		"connected":	[{
+				"socket":	5,
+				"local_host":	"10.0.0.13",
+				"local_port":	1503,
+				"remote_host":	"10.0.0.2",
+				"remote_port":	58748
+			}],
+		"version":	"iperf 3.0.7",
+		"system_info":	"Linux H13 5.4.197-0504197-generic #202206060747 SMP Mon Jun 6 09:27:47 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux\n",
+		"timestamp":	{
+			"time":	"Fri, 22 Jul 2022 16:27:35 GMT",
+			"timesecs":	1658507255
+		},
+		"accepted_connection":	{
+			"host":	"10.0.0.2",
+			"port":	58746
+		},
+		"cookie":	"H2.1658507255.104675.230fe8f30823dd9",
+		"tcp_mss_default":	1448,
+		"test_start":	{
+			"protocol":	"TCP",
+			"num_streams":	1,
+			"blksize":	131072,
+			"omit":	0,
+			"duration":	5,
+			"bytes":	0,
+			"blocks":	0,
+			"reverse":	0
+		}
+	},
+	"intervals":	[{
+			"streams":	[{
+					"socket":	5,
+					"start":	0,
+					"end":	1.00112,
+					"seconds":	1.00112,
+					"bytes":	1689400,
+					"bits_per_second":	1.35001e+07,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	0,
+				"end":	1.00112,
+				"seconds":	1.00112,
+				"bytes":	1689400,
+				"bits_per_second":	1.35001e+07,
+				"omitted":	false
+			}
+		}, {
+			"streams":	[{
+					"socket":	5,
+					"start":	1.00112,
+					"end":	2.00103,
+					"seconds":	0.999915,
+					"bytes":	1966080,
+					"bits_per_second":	1.573e+07,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	1.00112,
+				"end":	2.00103,
+				"seconds":	0.999915,
+				"bytes":	1966080,
+				"bits_per_second":	1.573e+07,
+				"omitted":	false
+			}
+		}, {
+			"streams":	[{
+					"socket":	5,
+					"start":	2.00103,
+					"end":	3.00108,
+					"seconds":	1.00005,
+					"bytes":	1865416,
+					"bits_per_second":	1.49226e+07,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	2.00103,
+				"end":	3.00108,
+				"seconds":	1.00005,
+				"bytes":	1865416,
+				"bits_per_second":	1.49226e+07,
+				"omitted":	false
+			}
+		}, {
+			"streams":	[{
+					"socket":	5,
+					"start":	3.00108,
+					"end":	4.00035,
+					"seconds":	0.999266,
+					"bytes":	1804600,
+					"bits_per_second":	1.44474e+07,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	3.00108,
+				"end":	4.00035,
+				"seconds":	0.999266,
+				"bytes":	1804600,
+				"bits_per_second":	1.44474e+07,
+				"omitted":	false
+			}
+		}, {
+			"streams":	[{
+					"socket":	5,
+					"start":	4.00035,
+					"end":	5.00081,
+					"seconds":	1.00046,
+					"bytes":	1966080,
+					"bits_per_second":	1.57213e+07,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	4.00035,
+				"end":	5.00081,
+				"seconds":	1.00046,
+				"bytes":	1966080,
+				"bits_per_second":	1.57213e+07,
+				"omitted":	false
+			}
+		}, {
+			"streams":	[{
+					"socket":	5,
+					"start":	5.00081,
+					"end":	5.00103,
+					"seconds":	0.00022006,
+					"bytes":	0,
+					"bits_per_second":	0,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	5.00081,
+				"end":	5.00103,
+				"seconds":	0.00022006,
+				"bytes":	0,
+				"bits_per_second":	0,
+				"omitted":	false
+			}
+		}],
+	"end":	{
+		"streams":	[{
+				"sender":	{
+					"socket":	5,
+					"start":	0,
+					"end":	5.00103,
+					"seconds":	5.00103,
+					"bytes":	9291576,
+					"bits_per_second":	1.48635e+07,
+					"retransmits":	0
+				},
+				"receiver":	{
+					"socket":	5,
+					"start":	0,
+					"end":	5.00103,
+					"seconds":	5.00103,
+					"bytes":	9291576,
+					"bits_per_second":	1.48635e+07
+				}
+			}],
+		"sum_sent":	{
+			"start":	0,
+			"end":	5.00103,
+			"seconds":	5.00103,
+			"bytes":	9291576,
+			"bits_per_second":	1.48635e+07,
+			"retransmits":	0
+		},
+		"sum_received":	{
+			"start":	0,
+			"end":	5.00103,
+			"seconds":	5.00103,
+			"bytes":	9291576,
+			"bits_per_second":	1.48635e+07
+		},
+		"cpu_utilization_percent":	{
+			"host_total":	1.44083,
+			"host_user":	0.420149,
+			"host_system":	1.02062,
+			"remote_total":	0.480212,
+			"remote_user":	0.183871,
+			"remote_system":	0.296262
+		}
+	}
+}
+{
+	"start":	{
+		"connected":	[],
+		"version":	"iperf 3.0.7",
+		"system_info":	"Linux H13 5.4.197-0504197-generic #202206060747 SMP Mon Jun 6 09:27:47 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux\n"
+	},
+	"intervals":	[],
+	"end":	{
+	},
+	"error":	"interrupt - the server has terminated"
+}

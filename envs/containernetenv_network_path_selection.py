@@ -8,10 +8,8 @@ from time import sleep
 import random
 
 # example with Diogo thesis
-DOCKER_VOLUME="/home/pcapelo/Desktop/test"
-NUMBER_HOSTS = 13
-NUMBER_PATHS = 5
-REWARD_SCALE = NUMBER_HOSTS*NUMBER_HOSTS*NUMBER_PATHS
+from envs.parameters import DOCKER_VOLUME,NUMBER_HOSTS,NUMBER_PATHS,REWARD_SCALE
+
 state_helper = {}
 host_pairs = [('H4', 'H8'), ('H2', 'H11'), ('H2', 'H13'), ('H2', 'H9'), ('H4', 'H11'), ('H4', 'H9'), ('H2', 'H8'), ('H1', 'H11'),
              ('H1', 'H9'), ('H4', 'H13'), ('H4', 'H10'), ('H4', 'H7'), ('H3', 'H8'), ('H2', 'H10'), ('H2', 'H7'), ('H1', 'H8'), 
@@ -180,7 +178,8 @@ def reset_measures(containernet):
     containernet.bw_available = copy.deepcopy(containernet.bw_capacity)
     busy_ports = [6631, 6633]
     os.system("rm -f ./*.log")
-    open('active_paths.txt', 'w').close()
+    open(DOCKER_VOLUME+'active_paths.txt', 'w').close()
+    containernet.ofp_match_params={}
     
     host_pairs = [('H4', 'H8'), ('H2', 'H11'), ('H2', 'H13'), ('H2', 'H9'), ('H4', 'H11'), ('H4', 'H9'), ('H2', 'H8'), ('H1', 'H11'),
                   ('H1', 'H9'), ('H4', 'H13'), ('H4', 'H10'), ('H4','H7'), ('H3', 'H8'), ('H2', 'H10'), ('H2', 'H7'), ('H1', 'H8'),
