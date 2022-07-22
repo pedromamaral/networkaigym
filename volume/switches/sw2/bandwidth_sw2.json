@@ -1,1 +1,1 @@
-{"2": {"1": {"bandwidth": 100, "bandwidth_used": 0.0, "bandwidth_available": 100.0}, "4": {"bandwidth": 100, "bandwidth_used": 0.0, "bandwidth_available": 100.0}, "5": {"bandwidth": 100, "bandwidth_used": 0.0, "bandwidth_available": 100.0}}}
+{"2": {"1": {"bandwidth": 100, "bandwidth_used": 0.0, "bandwidth_available": 100.0}, "4": {"bandwidth": 100, "bandwidth_used": 12.0, "bandwidth_available": 88.0}, "5": {"bandwidth": 100, "bandwidth_used": 0.0, "bandwidth_available": 100.0}}}

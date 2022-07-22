@@ -1,1 +1,1 @@
-from envs.containernetenvdiogo import ContainernetEnv
+from envs.containernetenv_network_path_selection import ContainernetEnv
