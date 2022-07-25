@@ -60,6 +60,19 @@ _switches = []
 """dict[(src_mac, dst_mac)]=path calculated by dijkstra_from_macs"""
 paths_hops = {}
 
+"""
+    get json with key tuples and conver it into a dict
+"""
+def convert_json_with_key_tuples_into_dict(data):
+    data_dict={}
+    for devices in data:
+        devices_aux = devices.replace("(", "")
+        devices_aux = devices_aux.replace(")", "")
+        devices_aux = devices_aux.replace(" ", "")
+        devices_aux = devices_aux.replace("'", "")
+        device1,device2 = devices_aux.split(",")
+        data_dict[(device1,device2)]=data[devices]
+    return data_dict
 
 """
     get data and save it in a json file given a expecific name and open_model
@@ -78,33 +91,9 @@ def upload_data_in_json_file(data, file_name, open_model):
 def load_paths():
     global active_paths
     active_paths.clear()
-    try:
-        f = open(
-            DOCKER_VOLUME+"active_paths.txt", "r")
-        for line in f:
-            a = line.strip('\n').split('_')
-            if a:
-                path_list = list(a[2].split(","))
-                for i in range(len(path_list)):
-                    if "[" in path_list[i]:
-                        path_list[i] = path_list[i].replace("[", "")
-                        path_list[i] = path_list[i].replace(" ", "")
-                        path_list[i] = path_list[i].replace("'", "")
-                    elif "]" in path_list[i]:
-                        path_list[i] = path_list[i].replace("]", "")
-                        path_list[i] = path_list[i].replace(" ", "")
-                        path_list[i] = path_list[i].replace("'", "")
-                    else:
-                        path_list[i] = "S" + path_list[i].replace(" ", "")
-                
-                src_mac = a[0]
-                dst_mac = a[1]
-                active_paths[(src_mac, dst_mac)] = path_list
-
-        f.close()
-    except IOError:
-        print("LOAD_PATHS => file not ready")
-
+    active_paths_json=get_data_from_json("active_paths.json")
+    active_paths=convert_json_with_key_tuples_into_dict(active_paths_json)
+    
 
 def get_data_from_json(file_name):
     data = {}
@@ -120,55 +109,28 @@ def get_data_from_json(file_name):
             return data
         except:
             pass
-    
-
-
-def upload_host():
-    global host_to_switch_port, host_mac_ip_sw_port_out
-    host_mac_ip_sw_port_out = get_data_from_json("topology/hosts.json")
-    # host_to_switch_port
-    for host_mac, value in host_mac_ip_sw_port_out.items():
-        for key in value:
-            if key != 'ip':
-                sw_id = key
-                sw_port_out = host_mac_ip_sw_port_out[host_mac][sw_id]
-                host_to_switch_port[host_mac] = {}
-                host_to_switch_port[host_mac][sw_id] = int(sw_port_out.replace("eth", ""))
-                
-
+              
 
 def upload_bw_links():
     global bw,_switches,adjacency,bw_capacity
-    bw_json = get_data_from_json("topology/bandwidth_links.json")
-    for devices in bw_json:
-        
-        devices_aux = devices.replace("(", "")
-        devices_aux = devices_aux.replace(")", "")
-        devices_aux = devices_aux.replace(" ", "")
-        devices_aux = devices_aux.replace("'", "")
-        device1,device2 = devices_aux.split(",")
 
-        bw_capacity[(device1,device2)]=bw_json[devices]
-        
+    bw_json = get_data_from_json("topology/bandwidth_links.json")
+    bw_capacity=convert_json_with_key_tuples_into_dict(bw_json)
+    
+    for (device1,device2) in bw_capacity:
         if "S" in device1 and "S" in device2:
-            device1 = device1.replace("S", "")
-            device2 = device2.replace("S", "")
-            bw[(device1, device2)] = bw_json[devices]
-            _switches.append(device1) if device1 not in _switches else None
-            _switches.append(device2) if device2 not in _switches else None
+            device1_bw = device1.replace("S", "")
+            device2_bw = device2.replace("S", "")
+            bw[(device1_bw, device2_bw)] = bw_capacity[(device1, device2)]
+            _switches.append(device1_bw) if device1_bw not in _switches else None
+            _switches.append(device2_bw) if device2_bw not in _switches else None
     
     adjacency_json= get_data_from_json("topology/switches_adjacency.json")
-    for switches in adjacency_json:
-        switches_aux = switches.replace("(","")
-        switches_aux = switches_aux.replace(" ", "")
-        switches_aux = switches_aux.replace(")","")
-        switches_aux = switches_aux.replace("'","")
-        sw1,sw2 = switches_aux.split(",")
-        adjacency[(str(sw1),str(sw2))]=int(adjacency_json[switches])
+    adjacency=convert_json_with_key_tuples_into_dict(adjacency_json)
+    
     
 
 def upload_topology_information():
-    upload_host()
     upload_bw_links()
 
 
@@ -178,7 +140,7 @@ class RyuController(app_manager.RyuApp):
     def __init__(self, *args, **kwargs):
         super(RyuController, self).__init__(*args, **kwargs)
         self.monitor_thread = hub.spawn(self._monitor)
-        self.starting_rules = 0
+        
 
         self.topology_api_app = self
 
@@ -261,20 +223,24 @@ class RyuController(app_manager.RyuApp):
             print("upload topo and install starting rules")
             self.install_starting_rules()
 
+
+
+
     def install_starting_rules(self):
-        global paths, paths_hops, host_to_switch_port,bw_capacity
+        global paths, paths_hops
         
-        for src_host in host_to_switch_port.keys():
-                for dst_host in host_to_switch_port.keys():
-                    if src_host != dst_host:
-                        
-                        graph = networkX_api_topo.build_graph_from_txt(bw_capacity)
-                        path = networkX_api_topo.dijkstra(graph, src_host, dst_host, host_to_switch_port, adjacency)
-                        paths_hops[(src_host, dst_host)] = path
-                        paths[(src_host, dst_host)] = networkX_api_topo.add_ports_to_path(path, host_to_switch_port, adjacency, src_host, dst_host)
-                        ofp_match_params = dict(eth_src=str(src_host), eth_dst=str(dst_host))
-                        self.install_path(
-                            paths[(src_host, dst_host)], ofp_match_params)
+        print("*****************************************************************************************")
+        print("******************************* INSTALL_STARTING RULES **********************************")
+        print("*****************************************************************************************")
+
+        paths_hops_json=get_data_from_json("starting_rules/paths_hops.json")
+        paths_hops=convert_json_with_key_tuples_into_dict(paths_hops_json)
+        paths_json=get_data_from_json("starting_rules/paths.json")
+        paths=convert_json_with_key_tuples_into_dict(paths_json)
+        ofp_match_params= get_data_from_json("starting_rules/ofp_match_params.json")
+
+        for (src_host,dst_host) in paths:
+            self.install_path(paths[(src_host, dst_host)], ofp_match_params[src_host][dst_host])
 
     """
         =>After handshake with the OpenFlow switch is completed, the Table-miss flow entry is
@@ -425,7 +391,7 @@ class RyuController(app_manager.RyuApp):
         upload_data_in_json_file(
             bw_values, "switches/sw"+str(dpid)+"/bandwidth_sw"+str(dpid)+".json", "w")
         
-
+        
         if len(self.datapaths) == NUMBER_SWITCHES:
             
             load_paths()
@@ -433,20 +399,19 @@ class RyuController(app_manager.RyuApp):
 
 
     def update_paths(self):
-        global paths_hops, paths,host_ip_mac_sw_port_out
+        global paths_hops, paths
         params=get_data_from_json("OFPMatch/OFPMatch_params.json")
-        
+                
         for path in active_paths.values():
             
             src_mac =params[path[0]][path[-1]]["eth_src"]
             dst_mac = params[path[0]][path[-1]]["eth_dst"]
             ofpmatch_params=params[path[0]][path[-1]]
-
             saved_path = paths_hops.get((src_mac, dst_mac))
             if saved_path != path:
                 self.uninstall_path(paths[(src_mac, dst_mac)],ofpmatch_params)
                 paths_hops[(src_mac, dst_mac)] = path
-                paths[(src_mac, dst_mac)] = networkX_api_topo.add_ports_to_path(path, host_to_switch_port, adjacency, src_mac, dst_mac)
+                paths[(src_mac, dst_mac)] = networkX_api_topo.add_ports_to_path(path, adjacency, src_mac, dst_mac)
                 self.install_path(paths[(src_mac, dst_mac)], ofpmatch_params)
 
     # OFPMatch source: https://ryu.readthedocs.io/en/latest/ofproto_v1_3_ref.html#flow-match-structure

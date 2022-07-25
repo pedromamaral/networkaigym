@@ -1,0 +1,379 @@
+{
+	"start":	{
+		"connected":	[{
+				"socket":	5,
+				"local_host":	"10.0.0.12",
+				"local_port":	1103,
+				"remote_host":	"10.0.0.7",
+				"remote_port":	55989
+			}],
+		"version":	"iperf 3.0.7",
+		"system_info":	"Linux MECS5 5.4.197-0504197-generic #202206060747 SMP Mon Jun 6 09:27:47 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux\n",
+		"timestamp":	{
+			"time":	"Mon, 25 Jul 2022 21:49:13 GMT",
+			"timesecs":	1658785753
+		},
+		"accepted_connection":	{
+			"host":	"10.0.0.7",
+			"port":	44682
+		},
+		"cookie":	"BS7.1658785753.804079.14a830a8798698",
+		"test_start":	{
+			"protocol":	"UDP",
+			"num_streams":	1,
+			"blksize":	8192,
+			"omit":	0,
+			"duration":	9,
+			"bytes":	0,
+			"blocks":	0,
+			"reverse":	0
+		}
+	},
+	"intervals":	[{
+			"streams":	[{
+					"socket":	5,
+					"start":	0,
+					"end":	1.00081,
+					"seconds":	1.00081,
+					"bytes":	10149888,
+					"bits_per_second":	8.11334e+07,
+					"jitter_ms":	2.40874,
+					"lost_packets":	43,
+					"packets":	1239,
+					"lost_percent":	3.47054,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	0,
+				"end":	1.00081,
+				"seconds":	1.00081,
+				"bytes":	10149888,
+				"bits_per_second":	8.11334e+07,
+				"jitter_ms":	2.40874,
+				"lost_packets":	43,
+				"packets":	1239,
+				"lost_percent":	3.47054,
+				"omitted":	false
+			}
+		}, {
+			"streams":	[{
+					"socket":	5,
+					"start":	1.00081,
+					"end":	2.00344,
+					"seconds":	1.00263,
+					"bytes":	10731520,
+					"bits_per_second":	8.56267e+07,
+					"jitter_ms":	0.724655,
+					"lost_packets":	359,
+					"packets":	1668,
+					"lost_percent":	21.5228,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	1.00081,
+				"end":	2.00344,
+				"seconds":	1.00263,
+				"bytes":	10731520,
+				"bits_per_second":	8.56267e+07,
+				"jitter_ms":	0.724655,
+				"lost_packets":	359,
+				"packets":	1668,
+				"lost_percent":	21.5228,
+				"omitted":	false
+			}
+		}, {
+			"streams":	[{
+					"socket":	5,
+					"start":	2.00344,
+					"end":	3.00019,
+					"seconds":	0.996744,
+					"bytes":	12468224,
+					"bits_per_second":	1.00072e+08,
+					"jitter_ms":	0.381064,
+					"lost_packets":	1,
+					"packets":	1522,
+					"lost_percent":	0.065703,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	2.00344,
+				"end":	3.00019,
+				"seconds":	0.996744,
+				"bytes":	12468224,
+				"bits_per_second":	1.00072e+08,
+				"jitter_ms":	0.381064,
+				"lost_packets":	1,
+				"packets":	1522,
+				"lost_percent":	0.065703,
+				"omitted":	false
+			}
+		}, {
+			"streams":	[{
+					"socket":	5,
+					"start":	3.00019,
+					"end":	4.00007,
+					"seconds":	0.999882,
+					"bytes":	12828672,
+					"bits_per_second":	1.02641e+08,
+					"jitter_ms":	0.823323,
+					"lost_packets":	11,
+					"packets":	1577,
+					"lost_percent":	0.697527,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	3.00019,
+				"end":	4.00007,
+				"seconds":	0.999882,
+				"bytes":	12828672,
+				"bits_per_second":	1.02641e+08,
+				"jitter_ms":	0.823323,
+				"lost_packets":	11,
+				"packets":	1577,
+				"lost_percent":	0.697527,
+				"omitted":	false
+			}
+		}, {
+			"streams":	[{
+					"socket":	5,
+					"start":	4.00007,
+					"end":	5.00004,
+					"seconds":	0.99997,
+					"bytes":	12132352,
+					"bits_per_second":	9.70617e+07,
+					"jitter_ms":	0.781903,
+					"lost_packets":	17,
+					"packets":	1498,
+					"lost_percent":	1.13485,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	4.00007,
+				"end":	5.00004,
+				"seconds":	0.99997,
+				"bytes":	12132352,
+				"bits_per_second":	9.70617e+07,
+				"jitter_ms":	0.781903,
+				"lost_packets":	17,
+				"packets":	1498,
+				"lost_percent":	1.13485,
+				"omitted":	false
+			}
+		}, {
+			"streams":	[{
+					"socket":	5,
+					"start":	5.00004,
+					"end":	6.00054,
+					"seconds":	1.0005,
+					"bytes":	12197888,
+					"bits_per_second":	9.75342e+07,
+					"jitter_ms":	0.339949,
+					"lost_packets":	56,
+					"packets":	1541,
+					"lost_percent":	3.634,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	5.00004,
+				"end":	6.00054,
+				"seconds":	1.0005,
+				"bytes":	12197888,
+				"bits_per_second":	9.75342e+07,
+				"jitter_ms":	0.339949,
+				"lost_packets":	56,
+				"packets":	1541,
+				"lost_percent":	3.634,
+				"omitted":	false
+			}
+		}, {
+			"streams":	[{
+					"socket":	5,
+					"start":	6.00054,
+					"end":	7.00049,
+					"seconds":	0.999949,
+					"bytes":	12804096,
+					"bits_per_second":	1.02438e+08,
+					"jitter_ms":	0.765928,
+					"lost_packets":	27,
+					"packets":	1589,
+					"lost_percent":	1.69918,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	6.00054,
+				"end":	7.00049,
+				"seconds":	0.999949,
+				"bytes":	12804096,
+				"bits_per_second":	1.02438e+08,
+				"jitter_ms":	0.765928,
+				"lost_packets":	27,
+				"packets":	1589,
+				"lost_percent":	1.69918,
+				"omitted":	false
+			}
+		}, {
+			"streams":	[{
+					"socket":	5,
+					"start":	7.00049,
+					"end":	8.00012,
+					"seconds":	0.999633,
+					"bytes":	11706368,
+					"bits_per_second":	9.36853e+07,
+					"jitter_ms":	0.493652,
+					"lost_packets":	27,
+					"packets":	1456,
+					"lost_percent":	1.8544,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	7.00049,
+				"end":	8.00012,
+				"seconds":	0.999633,
+				"bytes":	11706368,
+				"bits_per_second":	9.36853e+07,
+				"jitter_ms":	0.493652,
+				"lost_packets":	27,
+				"packets":	1456,
+				"lost_percent":	1.8544,
+				"omitted":	false
+			}
+		}, {
+			"streams":	[{
+					"socket":	5,
+					"start":	8.00012,
+					"end":	9.01036,
+					"seconds":	1.01024,
+					"bytes":	12279808,
+					"bits_per_second":	9.72432e+07,
+					"jitter_ms":	1.23811,
+					"lost_packets":	27,
+					"packets":	1525,
+					"lost_percent":	1.77049,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	8.00012,
+				"end":	9.01036,
+				"seconds":	1.01024,
+				"bytes":	12279808,
+				"bits_per_second":	9.72432e+07,
+				"jitter_ms":	1.23811,
+				"lost_packets":	27,
+				"packets":	1525,
+				"lost_percent":	1.77049,
+				"omitted":	false
+			}
+		}, {
+			"streams":	[{
+					"socket":	5,
+					"start":	9.01036,
+					"end":	9.05952,
+					"seconds":	0.0491629,
+					"bytes":	622592,
+					"bits_per_second":	1.01311e+08,
+					"jitter_ms":	0.905847,
+					"lost_packets":	17,
+					"packets":	93,
+					"lost_percent":	18.2796,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	9.01036,
+				"end":	9.05952,
+				"seconds":	0.0491629,
+				"bytes":	622592,
+				"bits_per_second":	1.01311e+08,
+				"jitter_ms":	0.905847,
+				"lost_packets":	17,
+				"packets":	93,
+				"lost_percent":	18.2796,
+				"omitted":	false
+			}
+		}],
+	"end":	{
+		"streams":	[{
+				"udp":	{
+					"socket":	5,
+					"start":	0,
+					"end":	9.05952,
+					"seconds":	9.05952,
+					"bytes":	112336896,
+					"bits_per_second":	9.9199e+07,
+					"jitter_ms":	0.905847,
+					"lost_packets":	585,
+					"packets":	13708,
+					"lost_percent":	4.26758
+				}
+			}],
+		"sum":	{
+			"start":	0,
+			"end":	9.05952,
+			"seconds":	9.05952,
+			"bytes":	112336896,
+			"bits_per_second":	9.9199e+07,
+			"jitter_ms":	0.905847,
+			"lost_packets":	585,
+			"packets":	13708,
+			"lost_percent":	4.26758
+		},
+		"cpu_utilization_percent":	{
+			"host_total":	10.1265,
+			"host_user":	1.3187,
+			"host_system":	8.80779,
+			"remote_total":	34.0978,
+			"remote_user":	0.602101,
+			"remote_system":	33.4957
+		}
+	},
+	"error":	"OUT OF ORDER - incoming packet = 3 and received packet = 6 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 4 and received packet = 6 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 240 and received packet = 241 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 243 and received packet = 245 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 256 and received packet = 258 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 257 and received packet = 258 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 264 and received packet = 265 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 266 and received packet = 267 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 272 and received packet = 274 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 276 and received packet = 278 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 279 and received packet = 282 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 290 and received packet = 291 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 299 and received packet = 301 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 302 and received packet = 303 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 328 and received packet = 331 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 330 and received packet = 332 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 340 and received packet = 343 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 355 and received packet = 356 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 357 and received packet = 360 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 376 and received packet = 382 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 808 and received packet = 811 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 830 and received packet = 832 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 873 and received packet = 874 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 869 and received packet = 875 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 870 and received packet = 875 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 911 and received packet = 912 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 921 and received packet = 922 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 924 and received packet = 926 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 923 and received packet = 926 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 925 and received packet = 926 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 927 and received packet = 930 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 928 and received packet = 931 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 937 and received packet = 939 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 938 and received packet = 939 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 945 and received packet = 946 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 948 and received packet = 950 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 963 and received packet = 966 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 964 and received packet = 966 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 994 and received packet = 996 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1014 and received packet = 1018 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1113 and received packet = 1114 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1123 and received packet = 1124 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1175 and received packet = 1177 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 2412 and received packet = 2413 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 3145 and received packet = 3146 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 8915 and received packet = 8917 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 8923 and received packet = 8924 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 8990 and received packet = 8993 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 8991 and received packet = 8993 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 9102 and received packet = 9103 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 13209 and received packet = 13210 AND SP = 5"
+}

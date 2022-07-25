@@ -1,0 +1,416 @@
+{
+	"start":	{
+		"connected":	[{
+				"socket":	5,
+				"local_host":	"10.0.0.17",
+				"local_port":	3001,
+				"remote_host":	"10.0.0.6",
+				"remote_port":	44887
+			}],
+		"version":	"iperf 3.0.7",
+		"system_info":	"Linux CS3 5.4.197-0504197-generic #202206060747 SMP Mon Jun 6 09:27:47 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux\n",
+		"timestamp":	{
+			"time":	"Mon, 25 Jul 2022 21:47:42 GMT",
+			"timesecs":	1658785662
+		},
+		"accepted_connection":	{
+			"host":	"10.0.0.6",
+			"port":	38216
+		},
+		"cookie":	"BS6.1658785662.106695.54cd94f71cb23d",
+		"test_start":	{
+			"protocol":	"UDP",
+			"num_streams":	1,
+			"blksize":	8192,
+			"omit":	0,
+			"duration":	9,
+			"bytes":	0,
+			"blocks":	0,
+			"reverse":	0
+		}
+	},
+	"intervals":	[{
+			"streams":	[{
+					"socket":	5,
+					"start":	0,
+					"end":	1.00033,
+					"seconds":	1.00033,
+					"bytes":	2834432,
+					"bits_per_second":	2.26679e+07,
+					"jitter_ms":	1.07533,
+					"lost_packets":	4,
+					"packets":	346,
+					"lost_percent":	1.15607,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	0,
+				"end":	1.00033,
+				"seconds":	1.00033,
+				"bytes":	2834432,
+				"bits_per_second":	2.26679e+07,
+				"jitter_ms":	1.07533,
+				"lost_packets":	4,
+				"packets":	346,
+				"lost_percent":	1.15607,
+				"omitted":	false
+			}
+		}, {
+			"streams":	[{
+					"socket":	5,
+					"start":	1.00033,
+					"end":	2.0021,
+					"seconds":	1.00177,
+					"bytes":	3137536,
+					"bits_per_second":	2.50559e+07,
+					"jitter_ms":	0.787861,
+					"lost_packets":	10,
+					"packets":	383,
+					"lost_percent":	2.61097,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	1.00033,
+				"end":	2.0021,
+				"seconds":	1.00177,
+				"bytes":	3137536,
+				"bits_per_second":	2.50559e+07,
+				"jitter_ms":	0.787861,
+				"lost_packets":	10,
+				"packets":	383,
+				"lost_percent":	2.61097,
+				"omitted":	false
+			}
+		}, {
+			"streams":	[{
+					"socket":	5,
+					"start":	2.0021,
+					"end":	3.00038,
+					"seconds":	0.998279,
+					"bytes":	3031040,
+					"bits_per_second":	2.42901e+07,
+					"jitter_ms":	0.971731,
+					"lost_packets":	12,
+					"packets":	379,
+					"lost_percent":	3.16623,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	2.0021,
+				"end":	3.00038,
+				"seconds":	0.998279,
+				"bytes":	3031040,
+				"bits_per_second":	2.42901e+07,
+				"jitter_ms":	0.971731,
+				"lost_packets":	12,
+				"packets":	379,
+				"lost_percent":	3.16623,
+				"omitted":	false
+			}
+		}, {
+			"streams":	[{
+					"socket":	5,
+					"start":	3.00038,
+					"end":	4.00037,
+					"seconds":	0.999992,
+					"bytes":	3194880,
+					"bits_per_second":	2.55592e+07,
+					"jitter_ms":	1.77843,
+					"lost_packets":	25,
+					"packets":	391,
+					"lost_percent":	6.39386,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	3.00038,
+				"end":	4.00037,
+				"seconds":	0.999992,
+				"bytes":	3194880,
+				"bits_per_second":	2.55592e+07,
+				"jitter_ms":	1.77843,
+				"lost_packets":	25,
+				"packets":	391,
+				"lost_percent":	6.39386,
+				"omitted":	false
+			}
+		}, {
+			"streams":	[{
+					"socket":	5,
+					"start":	4.00037,
+					"end":	5.00022,
+					"seconds":	0.99985,
+					"bytes":	3047424,
+					"bits_per_second":	2.4383e+07,
+					"jitter_ms":	0.94249,
+					"lost_packets":	13,
+					"packets":	372,
+					"lost_percent":	3.49462,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	4.00037,
+				"end":	5.00022,
+				"seconds":	0.99985,
+				"bytes":	3047424,
+				"bits_per_second":	2.4383e+07,
+				"jitter_ms":	0.94249,
+				"lost_packets":	13,
+				"packets":	372,
+				"lost_percent":	3.49462,
+				"omitted":	false
+			}
+		}, {
+			"streams":	[{
+					"socket":	5,
+					"start":	5.00022,
+					"end":	6.01007,
+					"seconds":	1.00985,
+					"bytes":	3112960,
+					"bits_per_second":	2.46607e+07,
+					"jitter_ms":	1.84736,
+					"lost_packets":	14,
+					"packets":	386,
+					"lost_percent":	3.62694,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	5.00022,
+				"end":	6.01007,
+				"seconds":	1.00985,
+				"bytes":	3112960,
+				"bits_per_second":	2.46607e+07,
+				"jitter_ms":	1.84736,
+				"lost_packets":	14,
+				"packets":	386,
+				"lost_percent":	3.62694,
+				"omitted":	false
+			}
+		}, {
+			"streams":	[{
+					"socket":	5,
+					"start":	6.01007,
+					"end":	7.00121,
+					"seconds":	0.991138,
+					"bytes":	2981888,
+					"bits_per_second":	2.40684e+07,
+					"jitter_ms":	1.4086,
+					"lost_packets":	27,
+					"packets":	376,
+					"lost_percent":	7.18085,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	6.01007,
+				"end":	7.00121,
+				"seconds":	0.991138,
+				"bytes":	2981888,
+				"bits_per_second":	2.40684e+07,
+				"jitter_ms":	1.4086,
+				"lost_packets":	27,
+				"packets":	376,
+				"lost_percent":	7.18085,
+				"omitted":	false
+			}
+		}, {
+			"streams":	[{
+					"socket":	5,
+					"start":	7.00121,
+					"end":	8.0004,
+					"seconds":	0.999188,
+					"bytes":	3104768,
+					"bits_per_second":	2.48583e+07,
+					"jitter_ms":	0.905091,
+					"lost_packets":	7,
+					"packets":	382,
+					"lost_percent":	1.83246,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	7.00121,
+				"end":	8.0004,
+				"seconds":	0.999188,
+				"bytes":	3104768,
+				"bits_per_second":	2.48583e+07,
+				"jitter_ms":	0.905091,
+				"lost_packets":	7,
+				"packets":	382,
+				"lost_percent":	1.83246,
+				"omitted":	false
+			}
+		}, {
+			"streams":	[{
+					"socket":	5,
+					"start":	8.0004,
+					"end":	9.00176,
+					"seconds":	1.00136,
+					"bytes":	3178496,
+					"bits_per_second":	2.53934e+07,
+					"jitter_ms":	1.29727,
+					"lost_packets":	7,
+					"packets":	388,
+					"lost_percent":	1.80412,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	8.0004,
+				"end":	9.00176,
+				"seconds":	1.00136,
+				"bytes":	3178496,
+				"bits_per_second":	2.53934e+07,
+				"jitter_ms":	1.29727,
+				"lost_packets":	7,
+				"packets":	388,
+				"lost_percent":	1.80412,
+				"omitted":	false
+			}
+		}, {
+			"streams":	[{
+					"socket":	5,
+					"start":	9.00176,
+					"end":	9.03241,
+					"seconds":	0.0306439,
+					"bytes":	0,
+					"bits_per_second":	0,
+					"jitter_ms":	1.29727,
+					"lost_packets":	0,
+					"packets":	0,
+					"lost_percent":	-nan,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	9.00176,
+				"end":	9.03241,
+				"seconds":	0.0306439,
+				"bytes":	0,
+				"bits_per_second":	0,
+				"jitter_ms":	1.29727,
+				"lost_packets":	0,
+				"packets":	0,
+				"lost_percent":	-nan,
+				"omitted":	false
+			}
+		}],
+	"end":	{
+		"streams":	[{
+				"udp":	{
+					"socket":	5,
+					"start":	0,
+					"end":	9.03241,
+					"seconds":	9.03241,
+					"bytes":	27877376,
+					"bits_per_second":	2.4691e+07,
+					"jitter_ms":	1.29727,
+					"lost_packets":	119,
+					"packets":	3403,
+					"lost_percent":	3.49691
+				}
+			}],
+		"sum":	{
+			"start":	0,
+			"end":	9.03241,
+			"seconds":	9.03241,
+			"bytes":	27877376,
+			"bits_per_second":	2.4691e+07,
+			"jitter_ms":	1.29727,
+			"lost_packets":	119,
+			"packets":	3403,
+			"lost_percent":	3.49691
+		},
+		"cpu_utilization_percent":	{
+			"host_total":	3.30668,
+			"host_user":	0.335248,
+			"host_system":	2.97145,
+			"remote_total":	5.1169,
+			"remote_user":	0.158868,
+			"remote_system":	4.95802
+		}
+	},
+	"error":	"OUT OF ORDER - incoming packet = 217 and received packet = 218 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 241 and received packet = 242 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 272 and received packet = 273 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 340 and received packet = 341 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 356 and received packet = 357 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 349 and received packet = 357 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 350 and received packet = 357 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 354 and received packet = 364 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 358 and received packet = 366 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 541 and received packet = 542 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 543 and received packet = 549 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 714 and received packet = 715 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 720 and received packet = 722 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 721 and received packet = 722 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1078 and received packet = 1079 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1081 and received packet = 1082 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1083 and received packet = 1084 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1126 and received packet = 1127 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1169 and received packet = 1170 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1171 and received packet = 1172 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1177 and received packet = 1178 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1173 and received packet = 1178 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1174 and received packet = 1178 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1183 and received packet = 1184 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1270 and received packet = 1274 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1271 and received packet = 1274 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1275 and received packet = 1277 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1278 and received packet = 1281 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1282 and received packet = 1284 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1339 and received packet = 1340 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1379 and received packet = 1383 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1382 and received packet = 1383 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1429 and received packet = 1430 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1433 and received packet = 1434 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1440 and received packet = 1441 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1446 and received packet = 1447 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1453 and received packet = 1459 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1461 and received packet = 1462 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1466 and received packet = 1468 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1467 and received packet = 1468 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1471 and received packet = 1474 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1532 and received packet = 1536 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1568 and received packet = 1570 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1583 and received packet = 1584 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1596 and received packet = 1597 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1620 and received packet = 1621 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1643 and received packet = 1644 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1648 and received packet = 1650 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1652 and received packet = 1653 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1655 and received packet = 1656 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1657 and received packet = 1658 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1667 and received packet = 1668 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1721 and received packet = 1722 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1725 and received packet = 1726 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 1994 and received packet = 2002 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 2010 and received packet = 2011 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 2131 and received packet = 2132 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 2148 and received packet = 2151 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 2149 and received packet = 2151 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 2154 and received packet = 2155 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 2213 and received packet = 2215 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 2234 and received packet = 2235 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 2272 and received packet = 2275 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 2274 and received packet = 2275 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 2273 and received packet = 2275 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 2309 and received packet = 2310 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 2348 and received packet = 2349 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 2355 and received packet = 2356 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 2414 and received packet = 2416 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 2415 and received packet = 2417 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 2418 and received packet = 2419 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 2421 and received packet = 2424 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 2422 and received packet = 2424 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 2426 and received packet = 2427 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 2429 and received packet = 2430 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 2428 and received packet = 2430 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 2446 and received packet = 2447 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 2711 and received packet = 2712 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 2774 and received packet = 2776 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 2775 and received packet = 2776 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 2827 and received packet = 2832 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 3133 and received packet = 3136 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 3137 and received packet = 3140 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 3142 and received packet = 3145 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 3181 and received packet = 3183 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 3184 and received packet = 3186 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 3300 and received packet = 3301 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 3302 and received packet = 3303 AND SP = 5"
+}

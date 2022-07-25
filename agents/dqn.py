@@ -78,6 +78,7 @@ def dqn_agent(gamma = 0.9, epsilon = 0.5, learning_rate = 1e-3,state_flattened_s
             cnt += 1
             qval = model(state1)
             qval_ = qval.data.numpy()
+            
             if (random.random() < epsilon):
                 action_ = np.random.randint(0, n_action - 1)
             else:

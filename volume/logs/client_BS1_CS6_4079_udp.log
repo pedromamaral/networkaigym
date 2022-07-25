@@ -1,0 +1,188 @@
+{
+	"start":	{
+		"connected":	[{
+				"socket":	4,
+				"local_host":	"10.0.0.1",
+				"local_port":	49464,
+				"remote_host":	"10.0.0.20",
+				"remote_port":	4079
+			}],
+		"version":	"iperf 3.0.7",
+		"system_info":	"Linux BS1 5.4.197-0504197-generic #202206060747 SMP Mon Jun 6 09:27:47 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux\n",
+		"timestamp":	{
+			"time":	"Mon, 25 Jul 2022 21:42:27 GMT",
+			"timesecs":	1658785347
+		},
+		"connecting_to":	{
+			"host":	"10.0.0.20",
+			"port":	4079
+		},
+		"cookie":	"BS1.1658785347.542139.31d83f443132dd",
+		"test_start":	{
+			"protocol":	"UDP",
+			"num_streams":	1,
+			"blksize":	8192,
+			"omit":	0,
+			"duration":	6,
+			"bytes":	0,
+			"blocks":	0,
+			"reverse":	0
+		}
+	},
+	"intervals":	[{
+			"streams":	[{
+					"socket":	4,
+					"start":	0,
+					"end":	1.00026,
+					"seconds":	1.00026,
+					"bytes":	23535616,
+					"bits_per_second":	1.88236e+08,
+					"packets":	2873,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	0,
+				"end":	1.00026,
+				"seconds":	1.00026,
+				"bytes":	23535616,
+				"bits_per_second":	1.88236e+08,
+				"packets":	2873,
+				"omitted":	false
+			}
+		}, {
+			"streams":	[{
+					"socket":	4,
+					"start":	1.00026,
+					"end":	2.00006,
+					"seconds":	0.999798,
+					"bytes":	23953408,
+					"bits_per_second":	1.91666e+08,
+					"packets":	2924,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	1.00026,
+				"end":	2.00006,
+				"seconds":	0.999798,
+				"bytes":	23953408,
+				"bits_per_second":	1.91666e+08,
+				"packets":	2924,
+				"omitted":	false
+			}
+		}, {
+			"streams":	[{
+					"socket":	4,
+					"start":	2.00006,
+					"end":	3.00049,
+					"seconds":	1.00044,
+					"bytes":	25665536,
+					"bits_per_second":	2.05235e+08,
+					"packets":	3133,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	2.00006,
+				"end":	3.00049,
+				"seconds":	1.00044,
+				"bytes":	25665536,
+				"bits_per_second":	2.05235e+08,
+				"packets":	3133,
+				"omitted":	false
+			}
+		}, {
+			"streams":	[{
+					"socket":	4,
+					"start":	3.00049,
+					"end":	4.00019,
+					"seconds":	0.999698,
+					"bytes":	25665536,
+					"bits_per_second":	2.05386e+08,
+					"packets":	3133,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	3.00049,
+				"end":	4.00019,
+				"seconds":	0.999698,
+				"bytes":	25665536,
+				"bits_per_second":	2.05386e+08,
+				"packets":	3133,
+				"omitted":	false
+			}
+		}, {
+			"streams":	[{
+					"socket":	4,
+					"start":	4.00019,
+					"end":	5.00041,
+					"seconds":	1.00022,
+					"bytes":	24993792,
+					"bits_per_second":	1.99907e+08,
+					"packets":	3051,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	4.00019,
+				"end":	5.00041,
+				"seconds":	1.00022,
+				"bytes":	24993792,
+				"bits_per_second":	1.99907e+08,
+				"packets":	3051,
+				"omitted":	false
+			}
+		}, {
+			"streams":	[{
+					"socket":	4,
+					"start":	5.00041,
+					"end":	6.00057,
+					"seconds":	1.00016,
+					"bytes":	24461312,
+					"bits_per_second":	1.95659e+08,
+					"packets":	2986,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	5.00041,
+				"end":	6.00057,
+				"seconds":	1.00016,
+				"bytes":	24461312,
+				"bits_per_second":	1.95659e+08,
+				"packets":	2986,
+				"omitted":	false
+			}
+		}],
+	"end":	{
+		"streams":	[{
+				"udp":	{
+					"socket":	4,
+					"start":	0,
+					"end":	6.00057,
+					"seconds":	6.00057,
+					"bytes":	148275200,
+					"bits_per_second":	1.97682e+08,
+					"jitter_ms":	0.736738,
+					"lost_packets":	1066,
+					"packets":	2991,
+					"lost_percent":	35.6403
+				}
+			}],
+		"sum":	{
+			"start":	0,
+			"end":	6.00057,
+			"seconds":	6.00057,
+			"bytes":	148275200,
+			"bits_per_second":	1.97682e+08,
+			"jitter_ms":	0.736738,
+			"lost_packets":	1066,
+			"packets":	2991,
+			"lost_percent":	35.6403
+		},
+		"cpu_utilization_percent":	{
+			"host_total":	38.1367,
+			"host_user":	0.709367,
+			"host_system":	37.4273,
+			"remote_total":	1.78713,
+			"remote_user":	0.618251,
+			"remote_system":	1.16888
+		}
+	}
+}

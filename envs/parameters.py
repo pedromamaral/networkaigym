@@ -1,8 +1,7 @@
 
-TOPOLOGY_FILE = 'topology_arpanet.txt'
-DOCKER_VOLUME = '/home/pcapelo/Desktop/containernet_gym/volume/'
-NUMBER_SWITCHES = 20
-NUMBER_HOSTS = 13
-NUMBER_PATHS = 5
-REWARD_SCALE = NUMBER_HOSTS*NUMBER_HOSTS*NUMBER_PATHS
+
+DOCKER_VOLUME = '/home/pcapelo/Desktop/ai_gym_for_networks/volume/'
+#NUMBER_SWITCHES = 20
+NUMBER_SWITCHES = 65
+
 LOG_TIMEOUT = 90

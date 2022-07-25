@@ -1,0 +1,151 @@
+{
+	"start":	{
+		"connected":	[{
+				"socket":	5,
+				"local_host":	"10.0.0.16",
+				"local_port":	2612,
+				"remote_host":	"10.0.0.2",
+				"remote_port":	60778
+			}],
+		"version":	"iperf 3.0.7",
+		"system_info":	"Linux CS2 5.4.197-0504197-generic #202206060747 SMP Mon Jun 6 09:27:47 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux\n",
+		"timestamp":	{
+			"time":	"Mon, 25 Jul 2022 21:44:06 GMT",
+			"timesecs":	1658785446
+		},
+		"accepted_connection":	{
+			"host":	"10.0.0.2",
+			"port":	43004
+		},
+		"cookie":	"BS2.1658785446.250153.7bf3a3ac4dd5c2",
+		"test_start":	{
+			"protocol":	"UDP",
+			"num_streams":	1,
+			"blksize":	8192,
+			"omit":	0,
+			"duration":	2,
+			"bytes":	0,
+			"blocks":	0,
+			"reverse":	0
+		}
+	},
+	"intervals":	[{
+			"streams":	[{
+					"socket":	5,
+					"start":	0,
+					"end":	1.00088,
+					"seconds":	1.00088,
+					"bytes":	1826816,
+					"bits_per_second":	1.46016e+07,
+					"jitter_ms":	1.92862,
+					"lost_packets":	535,
+					"packets":	753,
+					"lost_percent":	71.0491,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	0,
+				"end":	1.00088,
+				"seconds":	1.00088,
+				"bytes":	1826816,
+				"bits_per_second":	1.46016e+07,
+				"jitter_ms":	1.92862,
+				"lost_packets":	535,
+				"packets":	753,
+				"lost_percent":	71.0491,
+				"omitted":	false
+			}
+		}, {
+			"streams":	[{
+					"socket":	5,
+					"start":	1.00088,
+					"end":	2.00164,
+					"seconds":	1.00075,
+					"bytes":	0,
+					"bits_per_second":	0,
+					"jitter_ms":	1.92862,
+					"lost_packets":	0,
+					"packets":	0,
+					"lost_percent":	-nan,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	1.00088,
+				"end":	2.00164,
+				"seconds":	1.00075,
+				"bytes":	0,
+				"bits_per_second":	0,
+				"jitter_ms":	1.92862,
+				"lost_packets":	0,
+				"packets":	0,
+				"lost_percent":	-nan,
+				"omitted":	false
+			}
+		}, {
+			"streams":	[{
+					"socket":	5,
+					"start":	2.00164,
+					"end":	2.23274,
+					"seconds":	0.231102,
+					"bytes":	0,
+					"bits_per_second":	0,
+					"jitter_ms":	1.92862,
+					"lost_packets":	0,
+					"packets":	0,
+					"lost_percent":	-nan,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	2.00164,
+				"end":	2.23274,
+				"seconds":	0.231102,
+				"bytes":	0,
+				"bits_per_second":	0,
+				"jitter_ms":	1.92862,
+				"lost_packets":	0,
+				"packets":	0,
+				"lost_percent":	-nan,
+				"omitted":	false
+			}
+		}],
+	"end":	{
+		"streams":	[{
+				"udp":	{
+					"socket":	5,
+					"start":	0,
+					"end":	2.23274,
+					"seconds":	2.23274,
+					"bytes":	42491904,
+					"bits_per_second":	1.5225e+08,
+					"jitter_ms":	1.92862,
+					"lost_packets":	535,
+					"packets":	753,
+					"lost_percent":	71.0491
+				}
+			}],
+		"sum":	{
+			"start":	0,
+			"end":	2.23274,
+			"seconds":	2.23274,
+			"bytes":	42491904,
+			"bits_per_second":	1.5225e+08,
+			"jitter_ms":	1.92862,
+			"lost_packets":	535,
+			"packets":	753,
+			"lost_percent":	71.0491
+		},
+		"cpu_utilization_percent":	{
+			"host_total":	0.61698,
+			"host_user":	0,
+			"host_system":	0.617019,
+			"remote_total":	71.4008,
+			"remote_user":	4.85825,
+			"remote_system":	66.5423
+		}
+	},
+	"error":	"OUT OF ORDER - incoming packet = 309 and received packet = 311 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 326 and received packet = 327 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 380 and received packet = 381 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 391 and received packet = 392 AND SP = 5",
+	"error":	"OUT OF ORDER - incoming packet = 492 and received packet = 493 AND SP = 5"
+}

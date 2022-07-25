@@ -1,0 +1,99 @@
+{
+	"start":	{
+		"connected":	[{
+				"socket":	4,
+				"local_host":	"10.0.0.6",
+				"local_port":	34094,
+				"remote_host":	"10.0.0.19",
+				"remote_port":	2279
+			}],
+		"version":	"iperf 3.0.7",
+		"system_info":	"Linux BS6 5.4.197-0504197-generic #202206060747 SMP Mon Jun 6 09:27:47 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux\n",
+		"timestamp":	{
+			"time":	"Mon, 25 Jul 2022 21:51:10 GMT",
+			"timesecs":	1658785870
+		},
+		"connecting_to":	{
+			"host":	"10.0.0.19",
+			"port":	2279
+		},
+		"cookie":	"BS6.1658785870.300284.2d5014480fb00c",
+		"tcp_mss_default":	1448,
+		"test_start":	{
+			"protocol":	"TCP",
+			"num_streams":	1,
+			"blksize":	131072,
+			"omit":	0,
+			"duration":	1,
+			"bytes":	0,
+			"blocks":	0,
+			"reverse":	0
+		}
+	},
+	"intervals":	[{
+			"streams":	[{
+					"socket":	4,
+					"start":	0,
+					"end":	1.00042,
+					"seconds":	1.00042,
+					"bytes":	11372048,
+					"bits_per_second":	9.09384e+07,
+					"retransmits":	11,
+					"snd_cwnd":	666080,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	0,
+				"end":	1.00042,
+				"seconds":	1.00042,
+				"bytes":	11372048,
+				"bits_per_second":	9.09384e+07,
+				"retransmits":	11,
+				"omitted":	false
+			}
+		}],
+	"end":	{
+		"streams":	[{
+				"sender":	{
+					"socket":	4,
+					"start":	0,
+					"end":	1.00042,
+					"seconds":	1.00042,
+					"bytes":	11372048,
+					"bits_per_second":	9.09384e+07,
+					"retransmits":	11
+				},
+				"receiver":	{
+					"socket":	4,
+					"start":	0,
+					"end":	1.00042,
+					"seconds":	1.00042,
+					"bytes":	11372048,
+					"bits_per_second":	9.09384e+07
+				}
+			}],
+		"sum_sent":	{
+			"start":	0,
+			"end":	1.00042,
+			"seconds":	1.00042,
+			"bytes":	11372048,
+			"bits_per_second":	9.09384e+07,
+			"retransmits":	11
+		},
+		"sum_received":	{
+			"start":	0,
+			"end":	1.00042,
+			"seconds":	1.00042,
+			"bytes":	11372048,
+			"bits_per_second":	9.09384e+07
+		},
+		"cpu_utilization_percent":	{
+			"host_total":	6.07533,
+			"host_user":	1.61654,
+			"host_system":	4.45844,
+			"remote_total":	5.80857,
+			"remote_user":	0.578762,
+			"remote_system":	5.22964
+		}
+	}
+}

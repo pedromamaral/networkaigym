@@ -7,65 +7,25 @@ from os import system
 import time
 import random
 import copy
-import envs.networkX_api_topo as netX
+
 import json
 import subprocess as sp
 import os
 
-from envs.parameters import TOPOLOGY_FILE, DOCKER_VOLUME,LOG_TIMEOUT
-
-
-"""
-    get data and save it in a json file given a expecific name and open_model
-"""
-
-
-def upload_data_in_json_file(data, file_name, open_model):
-   
-    filename = DOCKER_VOLUME+file_name
-    os.makedirs(os.path.dirname(filename), exist_ok=True)
-    if open_model != "r" or open_model != "r+":
-        with open(filename, open_model) as f:
-            json.dump({str(k): v for k, v in data.items()}, f)
-            f.close()
-
-
-def json_from_log(client, server, port, node_type, traffic_type):
-    data = {}
-    start_time: time = time()
-    current_time: time = time()
-    while not data and current_time - start_time < LOG_TIMEOUT:
-        try:
-            if node_type == "server":
-                with open(f"{DOCKER_VOLUME}logs/server_{server}_{client}_{port}.log", 'r') as f:
-                    data = json.load(f)
-            else:
-                if traffic_type == "udp":
-                    with open(f"{DOCKER_VOLUME}logs/client_{client}_{server}_{port}_udp.log", 'r') as f:
-                        data = json.load(f)
-                elif traffic_type == "tcp":
-                    with open(f"{DOCKER_VOLUME}logs/client_{client}_{server}_{port}_tcp.log", 'r') as f:
-                        data = json.load(f)
-        except (FileNotFoundError, json.decoder.JSONDecodeError):
-            time.sleep(0.2)
-        current_time = time()
-    return data
-
+from envs.parameters import DOCKER_VOLUME,LOG_TIMEOUT
 
 def get_data_from_json(file_name):
     data = {}
     filename=DOCKER_VOLUME+file_name
-    while data=={}:
-        try:
-            with open(filename, 'r') as f:
-        
-                if os.stat(filename).st_size == 0:
-                    return {}
-                data = json.loads(f.read())
-            f.close()
-            return data
-        except:
-            pass
+    try:
+        with open(filename, 'r') as f:
+            if os.stat(filename).st_size == 0:
+                return {}
+            data = json.loads(f.read())
+        f.close()
+        return data
+    except:
+        return data
 
 
 """
@@ -76,7 +36,6 @@ def get_data_from_json(file_name):
             param3="bits_per_second"
             return data["end"]["sum"]["bits_per_second"]=1.42846e+07
 """
-
 
 def get_traffic_stats(data, param1, param2, param3):
     if param1 and param2 and param3:
@@ -91,7 +50,7 @@ def get_traffic_stats(data, param1, param2, param3):
 
 
 class ContainernetAPI:
-    def __init__(self, n_hosts, n_paths, init_costs=None):
+    def __init__(self,filename):
         system('clear')
         system('sudo rm -rf '+DOCKER_VOLUME)
         system('sudo mn -c')
@@ -99,25 +58,22 @@ class ContainernetAPI:
         self.network = Containernet(controller=RemoteController, switch=OVSSwitch, link=TCLink,
                                     autoSetMacs=True, ipBase='10.0.0.0/8')
         self.bw_capacity = {}
-        self.host_ip_mac = {}
-
-        self.n_hosts = n_hosts
-        self.n_paths = n_paths
-
+        
         self.bw_used = {}
         
-
         self.state_helper = {}
         self.controller_stats = {}
         self.ofp_match_params={}
-
-        
+        self.paths={}
+        self.active_paths={}
         self.switches={}
         self.adjacency={}
+
         self.active_connections = {}
+        
         self.device_intf = {}
 
-        self.load_topology(TOPOLOGY_FILE)
+        self.load_topology(filename)
 
         self.network.addController(
             'c0', controller=RemoteController, ip='127.0.0.1', port=6653)
@@ -125,34 +81,29 @@ class ContainernetAPI:
 
         self.change_hosts_id_to_hosts_mac()    
 
-        self.bw_available = copy.deepcopy(self.bw_capacity)
+        self.bw_available_now = copy.deepcopy(self.bw_capacity)
+        self.bw_available_cumulative = copy.deepcopy(self.bw_capacity)
 
-        upload_data_in_json_file(self.bw_capacity, "topology/bandwidth_links.json", "w")
+        self.upload_data_in_json_file(self.bw_capacity, "topology/bandwidth_links.json", "w")
         
-        self.upload_hosts_ip_mac_switch_out_port()
         self.upload_sw_adjacency()
         self.add_arps()
 
-        if init_costs:
-            self.get_initial_costs(init_costs)
-            self.graph = netX.build_graph_from_txt(self.bw_capacity,self.init_costs)
-        else:
-            self.graph = netX.build_graph_from_txt(self.bw_capacity)
-        
-        self.paths = netX.get_k_shortest_paths(self.graph, self.n_hosts, self.n_paths)
-       
+
+    def get_hosts(self):
+        return self.network.hosts
 
     def get_host_mac(self,host):
         return self.network.getNodeByName(host).MAC()
 
     def change_hosts_id_to_hosts_mac(self):
-
+        
         for (device1, device2) in self.bw_capacity.copy():
-            if "S" not in device1:
+            if "S" not in device1[0]:
                 node=self.network.getNodeByName(device1)
                 self.bw_capacity[(node.MAC(), device2)]=self.bw_capacity.pop((device1,device2))
             
-            if "S" not in device2:
+            if "S" not in device2[0]:
                 node=self.network.getNodeByName(device2)
                 self.bw_capacity[(device1, node.MAC())]=self.bw_capacity.pop((device1,device2))
 
@@ -244,7 +195,7 @@ class ContainernetAPI:
     def get_bw_used_bw_available(self):
 
         for (device1, device2) in self.bw_capacity:
-            if "S" in device1:
+            if "S" in device1[0]:
                 s1_dpid = device1.replace("S", "")
 
                 bw_json = get_data_from_json(
@@ -257,13 +208,9 @@ class ContainernetAPI:
                                 self.bw_used[("S"+str(s1_id), "S"+str(s2_id))] = bw_json[s1_id][s2_id].get("bandwidth_used")
 
                             if bw_json[s1_id][s2_id].get("bandwidth_available") != {}:
-                                #self.bw_available[("S"+str(s1_id), "S"+str(s2_id))] = bw_json[s1_id][s2_id].get("bandwidth_available")
-                                self.bw_available[("S"+str(s1_id), "S"+str(s2_id))] =float(self.bw_available[("S"+str(s1_id), "S"+str(s2_id))]) \
+                                self.bw_available_now[("S"+str(s1_id), "S"+str(s2_id))] = bw_json[s1_id][s2_id].get("bandwidth_available")
+                                self.bw_available_cumulative[("S"+str(s1_id), "S"+str(s2_id))] =float(self.bw_available_cumulative[("S"+str(s1_id), "S"+str(s2_id))]) \
                                     -float(bw_json[s1_id][s2_id].get("bandwidth_used"))
-                                
-                            
-
-        
                 
     """
         all the parameters that can be used in ofp_match are in
@@ -279,10 +226,7 @@ class ContainernetAPI:
         return ofp_match_params
 
     # send paths to the controller for rule installation
-    def send_path_to_controller(self, action, client, server):
-
-        client = self.get_host_mac(client)
-        server = self.get_host_mac(server)
+    def send_path_to_controller(self, client, server,path,path_r):
         
         if client not in self.ofp_match_params:
             self.ofp_match_params[client]={}
@@ -294,42 +238,27 @@ class ContainernetAPI:
         self.ofp_match_params[server][client]={}
         self.ofp_match_params[server][client]=self.define_ofp_match_params(server, client)
 
-        upload_data_in_json_file(
+        self.upload_data_in_json_file(
             self.ofp_match_params, "OFPMatch/OFPMatch_params.json", "w")
 
-
-        path = self.paths[(client, server)][action]
-        path_r = self.paths[(server, client)][action]
+        # {(00:00:00:00:00:08 ,00:00:00:00:00:04) : ['00:00:00:00:00:08', S13, S11, S4, '00:00:00:00:00:04']}}
+        # {(00:00:00:00:00:04 ,00:00:00:00:00:08) : ['00:00:00:00:00:04', S4, S11, S13, '00:00:00:00:00:08']}} 
         
+        if (client,server) not in self.active_paths:
+            self.active_paths[(client,server)] = {}
+        self.active_paths[(client,server)] = path
 
-        try:
-            f = open(DOCKER_VOLUME+"active_paths.txt", "a")
-            f.write('{}_{}_{} \n'.format(server, client, path_r))
-            f.write('{}_{}_{} \n'.format(client, server, path))
-            f.close()
-        except IOError:
-            print("file not ready")
+        if (server,client) not in self.active_paths:
+            self.active_paths[(server,client)] = {}
+        self.active_paths[(server,client)] = path_r
+
+        self.upload_data_in_json_file(self.active_paths,"active_paths.json","w")
 
         time.sleep(1)
 
-        self.get_bw_used_bw_available()
-
-    def get_percentage(self, src, dst, bw):
         
-        if "H" not in str(src) and "S" not in str(src):
-            src_str = "S" + str(src)
-        else:
-            src_str = src
 
-        if "H" not in str(dst) and "S" not in str(dst):
-            dst_str = "S" + str(dst)
-        else:
-            dst_str = dst
-
-        if self.bw_capacity.get((src_str, dst_str)):
-            return (bw / self.bw_capacity.get((src_str, dst_str))) * 100
-        else:
-            return None
+    
 
     """
         Resource limitations based on CFS scheduler:
@@ -369,25 +298,7 @@ class ContainernetAPI:
                               ' --no-stream --format "{container:{{.Container }}, memory:{raw:{{.MemUsage}}, percent:{{ .MemPerc }}},cpu:{{.CPUPerc}}}"')
         return output
 
-    """
-        save host ip mac and port out to sw in json file named hosts.json
-    """
-
-    def upload_hosts_ip_mac_switch_out_port(self):
-        for i, node in enumerate(self.network.hosts):
-            
-            hostname = node.name
-            self.host_ip_mac[node.MAC()]={}
-            self.host_ip_mac[node.MAC()]['ip'] = node.IP()
-            
-            device_intf=self.get_device_intf_and_link(node)
-            
-            for sw in device_intf[str(node)]:
-                port_out=int(device_intf[hostname][sw]['port_out'].replace("eth", ""))
-                port_out=str(port_out+1)
-                self.host_ip_mac[node.MAC()][sw.replace("S", "")] = str("eth"+port_out)
-        upload_data_in_json_file(self.host_ip_mac, "topology/hosts.json", "w")
-    
+       
     """
         save adjacency - dict[(switch1,switch2),switch1_port_out]
 
@@ -398,9 +309,12 @@ class ContainernetAPI:
             device_intf=self.get_device_intf_and_link(node)
             
             for sw2 in device_intf[str(node)]:
-                if "S" in sw2:
+                if "S" in sw2[0]:
                     self.adjacency[(str(switch.replace("S","")),str(sw2.replace("S","")))]= int(device_intf[switch][sw2]['port_out'].replace("eth", ""))
-        upload_data_in_json_file(self.adjacency, "topology/switches_adjacency.json", "w")
+                else:
+                    container=self.network.getNodeByName(sw2)
+                    self.adjacency[(str(switch.replace("S","")),container.MAC())]= int(device_intf[switch][sw2]['port_out'].replace("eth", ""))
+        self.upload_data_in_json_file(self.adjacency, "topology/switches_adjacency.json", "w")
     
     """
         return devices and interface links of one specific device
@@ -421,4 +335,37 @@ class ContainernetAPI:
                 device_intf[src][dst] = {'port_out': port_out, 'port_in': port_in}
         
         return device_intf
+
+    def upload_data_in_json_file(self,data, file_name, open_model):
+   
+        filename = DOCKER_VOLUME+file_name
+        os.makedirs(os.path.dirname(filename), exist_ok=True)
+        if open_model != "r" or open_model != "r+":
+            with open(filename, open_model) as f:
+                json.dump({str(k): v for k, v in data.items()}, f)
+                f.close()
+
+    """
+    get data and save it in a json file given a expecific name and open_model
+    """
+    def json_from_log(self,client, server, port, node_type, traffic_type):
+        data = {}
+        start_time = time.time()
+        current_time = time.time()
+        while not data and current_time - start_time < LOG_TIMEOUT:
+            try:
+                if node_type == "server":
+                    with open(f"{DOCKER_VOLUME}logs/server_{server}_{client}_{port}.log", 'r') as f:
+                        data = json.load(f)
+                else:
+                    if traffic_type == "udp":
+                        with open(f"{DOCKER_VOLUME}logs/client_{client}_{server}_{port}_udp.log", 'r') as f:
+                            data = json.load(f)
+                    elif traffic_type == "tcp":
+                        with open(f"{DOCKER_VOLUME}logs/client_{client}_{server}_{port}_tcp.log", 'r') as f:
+                            data = json.load(f)
+            except (FileNotFoundError, json.decoder.JSONDecodeError):
+                time.sleep(0.2)
+            current_time = time.time()
+        return data
     
