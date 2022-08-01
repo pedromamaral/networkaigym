@@ -1,6 +1,6 @@
-echo sudo apt install python3-ryu
-echo sudo pip install gym
-echo sudo pip install torch
-echo sudo pip install networkx
-echo sudo pip install matplotlib
-echo sudo docker build -f Dockerfile.iperf -t iperf:latest .
+sudo apt install python3-ryu
+sudo pip install gym
+sudo pip install torch
+sudo pip install networkx
+sudo pip install matplotlib
+sudo docker build -f Dockerfile.iperf -t iperf:latest .
