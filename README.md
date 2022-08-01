@@ -1,6 +1,6 @@
 # AI gym for Networks #
 
-The project ai_gym_for_networks aims to reduce the difficulty of setting up an network environment to train, test and compare Deep Reinforcement Learning Algorithms
+The project ai_gym_for_networks aims to reduce the difficulty of setting up a network environment to train, test and compare Deep Reinforcement Learning Algorithms
 
 Installation:
 Terminal 1:
