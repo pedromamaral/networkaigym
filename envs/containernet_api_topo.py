@@ -211,6 +211,7 @@ class ContainernetAPI:
                                 self.bw_available_now[("S"+str(s1_id), "S"+str(s2_id))] = bw_json[s1_id][s2_id].get("bandwidth_available")
                                 self.bw_available_cumulative[("S"+str(s1_id), "S"+str(s2_id))] =float(self.bw_available_cumulative[("S"+str(s1_id), "S"+str(s2_id))]) \
                                     -float(bw_json[s1_id][s2_id].get("bandwidth_used"))
+        
                 
     """
         all the parameters that can be used in ofp_match are in
@@ -366,6 +367,7 @@ class ContainernetAPI:
                             data = json.load(f)
             except (FileNotFoundError, json.decoder.JSONDecodeError):
                 time.sleep(0.2)
+                #print("log=>client_{}_{}_{}".format(client,server,port))
             current_time = time.time()
         return data
     

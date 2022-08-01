@@ -8,14 +8,17 @@ import collections
 from torch.optim.lr_scheduler import StepLR
 from collections import deque
 import copy
+from matplotlib import pyplot as plt
+from numpy import savetxt
+
 """
 Implementation of DQN for gym environments with discrete action space.
 source: 
 """
 
-def test_model(model, env):
+def test_model(model, env,state_flattened_size):
     _state = env.reset()
-    state = torch.flatten(torch.from_numpy(_state.astype(np.float32))).reshape(1, 845)
+    state = torch.flatten(torch.from_numpy(_state.astype(np.float32))).reshape(1, state_flattened_size)
     done = False
     rewards = []
     while not done:
@@ -24,10 +27,32 @@ def test_model(model, env):
         qval_ = qval.data.numpy()
         action = np.argmax(qval_)
         _state, reward, done, _ = env.step(action)
-        state = torch.flatten(torch.from_numpy(_state.astype(np.float32))).reshape(1, 845)
+        state = torch.flatten(torch.from_numpy(_state.astype(np.float32))).reshape(1, state_flattened_size)
         rewards.append(reward)
-        print("Request:", len(rewards), "Path:", action, "Reward:", reward)
+        print("Request:", len(rewards), "Action:", action, "Reward:", reward)
     print("Reward sum:", sum(rewards))
+    return rewards
+
+def save_plot_and_csv_train(total_rewards):
+    x = np.arange(len(total_rewards))
+    y = total_rewards
+    plt.xlabel("Epochs", fontsize=22)
+    plt.ylabel("Reward", fontsize=22)
+    plt.plot(x, y, c='black')
+    plt.savefig('dqn_train.png')
+    # save to csv file
+    savetxt('dqn_train.csv', total_rewards, delimiter=',')
+
+def save_plot_and_csv_test(total_rewards):
+    x = np.arange(len(total_rewards))
+    y = total_rewards
+    plt.xlabel("Epochs", fontsize=22)
+    plt.ylabel("Reward", fontsize=22)
+    plt.plot(x, y, c='black')
+    plt.savefig('dqn_test.png')
+    # save to csv file
+    savetxt('dqn_test.csv', total_rewards, delimiter=',')
+
 
 def dqn_agent(gamma = 0.9, epsilon = 0.5, learning_rate = 1e-3,state_flattened_size = 845, epochs = 4000,mem_size = 50000,
     batch_size = 256,sync_freq = 16,l1 = 845, l2 = 1500, l3 = 700,l4 = 200, l5 = 5, env=""):
@@ -39,6 +64,8 @@ def dqn_agent(gamma = 0.9, epsilon = 0.5, learning_rate = 1e-3,state_flattened_s
     :param env_name: name of the gym environment
     :return: 
     """
+    
+
     env= env
 
     model = torch.nn.Sequential(
@@ -119,28 +146,52 @@ def dqn_agent(gamma = 0.9, epsilon = 0.5, learning_rate = 1e-3,state_flattened_s
             total_reward += reward
 
         total_reward_list.append(total_reward)
+        save_plot_and_csv_train(total_reward_list)
+
         print("Episode reward:", total_reward)
 
         if epsilon > 0.01:
             epsilon -= (1 / epochs)
 
-    print(total_reward_list)
-    #torch.save(model.state_dict(), 'dqn_policy_set1_32r_16sync.pt')
+   
+    
+    #GUARDAR total_reward_list do TRAIN
+    torch.save(model.state_dict(), 'dqn.pt')
     print("TEST AGENT")
-    test_model(model,env)
+    model_test=model
+    model_test.load_state_dict(torch.load("dqn.pt"))
+    test_rewards=test_model(model_test,env,state_flattened_size)
+    save_plot_and_csv_test(test_rewards)
+    
+    #***************************PLOT TRAIN AND TEST*******************************************
+"""
+    epochs_array=[]
+    rewards_array=[]
+    for epochs_n, epochs_reward in enumerate(total_reward_list):
+        epochs_array.append(epochs_n)
+        rewards_array.append(epochs_reward)
 
-    """
-    sizes = [25, 50, 100, 200, 500]
-    for size in sizes:
-        avg = []
-        for idx in range(0, len(total_reward_list), size):
-            avg += [sum(val for val in total_reward_list[idx:idx + size]) / size]
+    plt.figure(figsize=(10, 7))
+    plt.plot(epochs_array,rewards_array,linewidth=2.0)
+    plt.xlabel("Epochs", fontsize=22)
+    plt.ylabel("Reward", fontsize=22)
+    plt.savefig('dqn_train.png')
+    # save to csv file
+    savetxt('dqn_train.csv', total_reward_list, delimiter=',')
+    
+    steps_array=[]
+    rewards_array=[]
+    for epochs_n, epochs_reward in enumerate(test_rewards):
+        steps_array.append(epochs_n)
+        rewards_array.append(epochs_reward)
 
-        plt.figure(figsize=(10, 7))
-        plt.plot(avg)
-        plt.xlabel("Epochs", fontsize=22)
-        plt.ylabel("Return", fontsize=22)
-        plt.savefig('dqn-policy_set1_32r_16sync_{}.png'.format(size))
-
-    """
+    plt.figure(figsize=(10, 7))
+    plt.plot(steps_array,rewards_array,linewidth=2.0)
+    plt.xlabel("Steps", fontsize=22)
+    plt.ylabel("Reward", fontsize=22)
+    plt.savefig('dqn_test.png')
+    # save to csv file
+    savetxt('dqn_test.csv', test_rewards, delimiter=',')
+"""
+    
      

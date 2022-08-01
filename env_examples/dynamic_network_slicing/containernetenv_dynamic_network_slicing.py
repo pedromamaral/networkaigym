@@ -13,7 +13,7 @@ from threading import Thread
 from envs.containernet_api_topo import ContainernetAPI
 from env_examples.dynamic_network_slicing.parameters import BASE_STATIONS, COMPUTING_STATIONS, PATHS, CONNECTIONS_OFFSET,\
         INPUT_DIM, OUTPUT_DIM, ELASTIC_ARRIVAL_AVERAGE, INELASTIC_ARRIVAL_AVERAGE, DURATION_AVERAGE, CONNECTIONS_AVERAGE,\
-        MAX_REQUESTS, PORT_RANGE,TOPOLOGY_FILE,REQUEST_FILE,NUMBER_PATHS
+        MAX_REQUESTS, PORT_RANGE,TOPOLOGY_FILE,REQUEST_FILE,NUMBER_PATHS,MAX_REQUESTS_QUEUE
 
 class ContainernetEnv(Env):
     def __init__(self):
@@ -41,8 +41,8 @@ class ContainernetEnv(Env):
 
         # define Env Elements/Variables
         self.requests= 0
-        self.requests_queue = Queue(maxsize=MAX_REQUESTS)
-        self.departed_queue = Queue(maxsize=MAX_REQUESTS)
+        self.requests_queue = Queue(maxsize=MAX_REQUESTS_QUEUE)
+        self.departed_queue = Queue(maxsize=MAX_REQUESTS_QUEUE)
 
         self.generator_semaphore = False
         self.elastic_generator = None
@@ -90,8 +90,8 @@ class ContainernetEnv(Env):
         self.state = np.zeros(INPUT_DIM, dtype=np.float32)
 
         self.requests = 0
-        self.requests_queue = Queue(maxsize=MAX_REQUESTS)
-        self.departed_queue = Queue(maxsize=MAX_REQUESTS)
+        self.requests_queue = Queue(maxsize=MAX_REQUESTS_QUEUE)
+        self.departed_queue = Queue(maxsize=MAX_REQUESTS_QUEUE)
 
         self.active_ports = []
         self.active_paths = BASE_STATIONS * COMPUTING_STATIONS * [-1]
@@ -103,6 +103,10 @@ class ContainernetEnv(Env):
         self.elastic_generator.start()
         self.inelastic_generator.start()
         self.evaluators = []
+
+        self.containernet.active_paths={}
+        self.containernet.ofp_match_params={}
+        self.containernet.bw_available_now=copy.deepcopy(self.containernet.bw_capacity)
 
         self.state_from_request(self.requests_queue.get(block=True))
 
@@ -166,9 +170,9 @@ class ContainernetEnv(Env):
         ofp_match_params={}
         paths_hops={}
         paths={}
-        print("*****************************************************************************************")
-        print("********************************** UPLOAD_STARTING_RULES ********************************")
-        print("*****************************************************************************************")
+        
+        print("********************************** UPLOAD_STARTING_RULES")
+        
         nodes = [node for node in self.containernet.network.hosts]
         base_stations = [bs.MAC() for bs in nodes if "B" in bs.name]
         computing_stations = [cs.MAC() for cs in nodes if "C" in cs.name or "M" in cs.name]
@@ -205,9 +209,7 @@ class ContainernetEnv(Env):
 
 
     def create_slice(self, clients, servers):
-        print("*****************************************************************************************")
-        print("*********************************** CREATE_SLICE ****************************************")
-        print("*****************************************************************************************")
+        
         ports= []
         traffic_type='tcp'
         self.update_bottlenecks()
@@ -216,7 +218,6 @@ class ContainernetEnv(Env):
 
             if client not in self.bottlenecks_src_dst.keys():
                 self.bottlenecks_src_dst[client]={}
-
 
             client = self.containernet.get_host_mac(client)
             server = self.containernet.get_host_mac(server)
@@ -235,10 +236,55 @@ class ContainernetEnv(Env):
             if self.state[0]==2:traffic_type='udp'
             self.containernet.generate_traffic_with_iperf(client, server, port, self.state[1], self.state[2],traffic_type)
 
+        
         evaluator = Thread(target=self.slice_evaluator,
                            args=(clients, servers, ports, self.state[0], self.state[1], self.state[2], self.state[1] * self.state[3]))
         self.evaluators += [evaluator]
         evaluator.start()
+
+    def slice_evaluator(self, clients, servers, ports, slice_type, duration, bw, price) :
+        
+        if slice_type not in [1, 2]:
+            return
+
+        traffic_type='tcp'
+        if slice_type==2:traffic_type='udp'
+
+        sleep(duration)
+
+        data= []
+        self.update_bottlenecks()
+        
+        for (client, server, port) in zip(clients, servers, ports):
+            if client not in self.bottlenecks_src_dst.keys():
+                self.bottlenecks_src_dst[client]={}
+            
+            result = self.containernet.json_from_log(client, server, port, "client", traffic_type)
+    
+            if result:
+                if "error" in result:
+                    print("ERROR in connections{}_{}_{}.log".format(client,server,port))
+                else:
+                    data += [result]
+
+            self.active_connections.remove(f'{client}_{server}_{port}')
+
+            client = self.containernet.get_host_mac(client)
+            server = self.containernet.get_host_mac(server)
+            path = self.get_higher_bottleneck_path(self.graph, client, server, PATHS)
+            path_r=self.get_higher_bottleneck_path(self.graph, server, client, PATHS)
+            self.containernet.send_path_to_controller(client,server,path,path_r)
+            self.containernet.get_bw_used_bw_available()
+            
+        if data:
+            reward = evaluate_elastic_slice(bw, price, data) if slice_type == 1 else evaluate_inelastic_slice(bw, price, data)
+        else:
+            reward=0
+        self.departed_queue.put(dict(type=1 if slice_type == 1 else 2, reward=reward))
+        self.requests_queue.put(dict(type=0, duration=0, bw=0.0, price=0.0,
+                                     connections=np.zeros(BASE_STATIONS * COMPUTING_STATIONS, dtype=np.float32)))
+        
+
 
     def request_generator(self, slice_type):
         if slice_type not in [1, 2]:
@@ -262,46 +308,8 @@ class ContainernetEnv(Env):
 
                 self.requests_queue.put(dict(type=slice_type, duration=int(duration), bw=float(bw),
                                              price=float(price), connections=connections.flatten()))
+                
 
-    def slice_evaluator(self, clients, servers, ports, slice_type, duration, bw, price) :
-        
-        if slice_type not in [1, 2]:
-            return
-
-        traffic_type='tcp'
-        if slice_type==2:traffic_type='udp'
-
-        sleep(duration)
-
-        data= []
-        self.update_bottlenecks()
-
-        print("*****************************************************************************************")
-        print("********************************** SLICE_EVALUATOR **************************************")
-        print("*****************************************************************************************")
-        
-        for (client, server, port) in zip(clients, servers, ports):
-            if client not in self.bottlenecks_src_dst.keys():
-                self.bottlenecks_src_dst[client]={}
-            
-            result = self.containernet.json_from_log(client, server, port, "client", traffic_type)
-            if result:
-                data += [result]
-
-            self.active_connections.remove(f'{client}_{server}_{port}')
-
-            client = self.containernet.get_host_mac(client)
-            server = self.containernet.get_host_mac(server)
-            path = self.get_higher_bottleneck_path(self.graph, client, server, PATHS)
-            path_r=self.get_higher_bottleneck_path(self.graph, server, client, PATHS)
-            self.containernet.send_path_to_controller(client,server,path,path_r)
-            self.containernet.get_bw_used_bw_available()
-            
-        
-        reward = evaluate_elastic_slice(bw, price, data) if slice_type == 1 else evaluate_inelastic_slice(bw, price, data)
-        self.departed_queue.put(dict(type=1 if slice_type == 1 else 2, reward=reward))
-        self.requests_queue.put(dict(type=0, duration=0, bw=0.0, price=0.0,
-                                     connections=np.zeros(BASE_STATIONS * COMPUTING_STATIONS, dtype=np.float32)))
 
     def get_bottlenecks_list(self):
         self.bottlenecks=[]
@@ -393,6 +401,7 @@ def slice_connections_from_array(connections):
     return clients, servers
 
 def evaluate_elastic_slice(bw, full_price, data):
+    
     averages= [connection["end"]["streams"][0]["receiver"]["bits_per_second"] / 1000000.0 for connection in data]
     total_average = sum(averages) / len(averages)
     if total_average >= bw - bw * .1:
@@ -406,7 +415,7 @@ def evaluate_inelastic_slice(bw, price, data):
     if worst >= bw - bw * .1:
         print(f"Finished inelastic slice {worst} >= {bw}")
         return 0.0
-    print(f"Finished inelastic slice {worst} < {bw}")
+    print(f"Failed inelastic slice {worst} < {bw}")
     return - price
 
 

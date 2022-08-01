@@ -101,15 +101,15 @@ def get_data_from_json(file_name):
     while data=={}:
         try:
             with open(filename, 'r') as f:
-        
                 if os.stat(filename).st_size == 0:
-                    return {}
-                data = json.loads(f.read())
+                    pass
+                else:
+                    data = json.loads(f.read())
             f.close()
-            return data
         except:
             pass
-              
+
+    return data
 
 def upload_bw_links():
     global bw,_switches,adjacency,bw_capacity
@@ -401,12 +401,11 @@ class RyuController(app_manager.RyuApp):
     def update_paths(self):
         global paths_hops, paths
         params=get_data_from_json("OFPMatch/OFPMatch_params.json")
-                
         for path in active_paths.values():
-            
             src_mac =params[path[0]][path[-1]]["eth_src"]
             dst_mac = params[path[0]][path[-1]]["eth_dst"]
             ofpmatch_params=params[path[0]][path[-1]]
+           
             saved_path = paths_hops.get((src_mac, dst_mac))
             if saved_path != path:
                 self.uninstall_path(paths[(src_mac, dst_mac)],ofpmatch_params)
@@ -416,7 +415,7 @@ class RyuController(app_manager.RyuApp):
 
     # OFPMatch source: https://ryu.readthedocs.io/en/latest/ofproto_v1_3_ref.html#flow-match-structure
     def install_path(self, p,params):
-        
+       
         for sw, in_port, out_port in p:
             datapath = self.datapaths.get(int(sw))
             parser = datapath.ofproto_parser
@@ -426,7 +425,7 @@ class RyuController(app_manager.RyuApp):
             
             
     def uninstall_path(self, p, params):
-       
+        
         for sw, in_port, _ in p:
             datapath = self.datapaths.get(int(sw))
             parser = datapath.ofproto_parser

@@ -103,7 +103,9 @@ class ContainernetEnv(Env):
             for dst in range(NUMBER_HOSTS):
                 for path_number in range(NUMBER_PATHS):
                     bw = self.state[src, dst, path_number]
+                    
                     link = get_state_helper().get(str(src + 1) + "_" + str(dst + 1) + "_" + str(path_number))
+                    
                     if link:
                         ex_link = link.split("_")
                         bw_percentage = self.get_percentage(ex_link[0], ex_link[1], bw[0])
@@ -144,29 +146,15 @@ class ContainernetEnv(Env):
                     ofp_match_params[src_host][dst_host]={}
                     ofp_match_params[src_host][dst_host]=self.containernet.define_ofp_match_params(src_host, dst_host)
 
-                    if dst_host not in ofp_match_params:     
-                        ofp_match_params[dst_host]={}
-                    ofp_match_params[dst_host][src_host]={}
-                    ofp_match_params[dst_host][src_host]=self.containernet.define_ofp_match_params(dst_host, src_host)
         
         self.containernet.upload_data_in_json_file(paths_hops, "starting_rules/paths_hops.json", "w")
         self.containernet.upload_data_in_json_file(paths, "starting_rules/paths.json", "w")
         self.containernet.upload_data_in_json_file(ofp_match_params, "starting_rules/ofp_match_params.json", "w")
         
     def get_percentage(self, src, dst, bw):
-        
-        if "H" not in str(src) and "S" not in str(src):
-            src_str = "S" + str(src)
-        else:
-            src_str = src
 
-        if "H" not in str(dst) and "S" not in str(dst):
-            dst_str = "S" + str(dst)
-        else:
-            dst_str = dst
-
-        if self.containernet.bw_capacity.get((src_str, dst_str)):
-            return (bw / self.containernet.bw_capacity.get((src_str, dst_str))) * 100
+        if self.containernet.bw_capacity.get((src, dst)):
+            return (bw / self.containernet.bw_capacity.get((src, dst))) * 100
         else:
             return None
                     
@@ -174,7 +162,7 @@ class ContainernetEnv(Env):
 #***************************************************************************************************************************************
 #************************************************AUXILIAR FUNCTIONS*********************************************************************
 #***************************************************************************************************************************************
-
+# build the network state using the controller stats and paths dict
 def build_state(containernet, n_hosts, n_paths):
     state = np.empty((n_hosts, n_hosts, n_paths, 1), dtype=object)
 
@@ -182,7 +170,9 @@ def build_state(containernet, n_hosts, n_paths):
         h_src=containernet.get_host_mac("H{}".format(src))
         for dst in range(1, n_hosts+1):
             h_dst=containernet.get_host_mac("H{}".format(dst))
+
             cnt = 0
+            
             if len(containernet.paths[(h_src, h_dst)]) == 1:
                 if not containernet.paths[(h_src, h_dst)]:
                     for idx in range(n_paths):
@@ -196,32 +186,20 @@ def build_state(containernet, n_hosts, n_paths):
                     
                     min_value = float('Inf')
                     for s1, s2 in zip(path[:-1], path[1:]):
-                        if "H" not in str(s1) and "S" not in str(s1):
-                            _s1 = "S" + str(s1)
-                        else:
-                            _s1 = str(s1)
-                        if "H" not in str(s2) and "S" not in str(s2):
-                            _s2 = "S" + str(s2)
-                        else:
-                            _s2 = str(s2)
-                        stats = containernet.bw_available_cumulative.get((str(_s1), str(_s2)))
-                        #print("stats",stats)
+                        
+                        stats = containernet.bw_available_cumulative[(str(s1), str(s2))]
                         if stats:
                             if float(stats) < float(min_value):
-                                min_value = containernet.bw_available_cumulative[(str(_s1), str(_s2))]
-                                state_helper[str(
-                                    src) + "_" + str(dst) + "_" + str(cnt)] = str(s1) + "_" + str(s2)
-
+                                min_value = containernet.bw_available_cumulative[(str(s1), str(s2))]
+                                state_helper[str(src) + "_" + str(dst) + "_" + str(cnt)] = str(s1) + "_" + str(s2)
                     
                     state[src-1, dst-1, cnt] = float(min_value)
-                    
                     cnt += 1
-
+                    
                 for idx in range(len(containernet.paths[(h_src, h_dst)]), n_paths):
                     state[src-1, dst-1, idx] = -1
-                    
-
-        return state
+    
+    return state
 
 
 def get_state_helper():
