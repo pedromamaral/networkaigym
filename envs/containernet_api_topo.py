@@ -108,7 +108,7 @@ class ContainernetAPI:
                 self.bw_capacity[(device1, node.MAC())]=self.bw_capacity.pop((device1,device2))
 
     def clear_logs(self):
-        system(f'rm -f {DOCKER_VOLUME}*.log')
+        system(f'sudo rm -f {DOCKER_VOLUME}logs/*.log')
 
     def add_host(self, name, container_params):
         if name not in self.network.keys():
