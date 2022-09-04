@@ -16,11 +16,14 @@ class ContainernetEnv(Env):
         #define Env Elements/Variables
     
     ''' 
-        get observation function
+        get_state function
         translates the environment state into an observation
+        The agent gets to a new state or observation state is
+        the information of the environment that an agent is in
+        and observation is an actual image that the agent sees.
     '''
-    def _get_obs(self):
-        print("_get_obs function")
+
+    def get_state(self):
 
     ''' 
         get information function
@@ -35,14 +38,6 @@ class ContainernetEnv(Env):
     #reset function
     def reset(self):
         print("reset function")        
-
-    #render function
-    def render(self, mode = "human"):
-        print("render function") 
-
-    #close function
-    def close(self):
-        print("close function") 
 
     #step function
     def step(self, action):
