@@ -107,6 +107,8 @@ class ContainernetEnv(Env):
         self.containernet.active_paths={}
         self.containernet.ofp_match_params={}
         self.containernet.bw_available_now=copy.deepcopy(self.containernet.bw_capacity)
+        self.containernet.bw_available_cumulative = copy.deepcopy(self.containernet.bw_capacity)
+        self.containernet.bw_used={}
 
         self.state_from_request(self.requests_queue.get(block=True))
 
