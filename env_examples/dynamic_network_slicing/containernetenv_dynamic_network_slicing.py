@@ -85,7 +85,7 @@ class ContainernetEnv(Env):
     '''
     # reset function
 
-    def reset(self) -> object:
+    def reset(self):
         self.containernet.clear_logs()
         self.state = np.zeros(INPUT_DIM, dtype=np.float32)
 
