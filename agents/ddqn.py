@@ -97,8 +97,8 @@ def train(batch_size, current, target, optim, memory, gamma,l1):
 
     states, actions, next_states, rewards, is_done = memory.sample(batch_size)
 
-    _states = states.reshape(256, l1)
-    _next_states = next_states.reshape(256, l1)
+    _states = states.reshape(batch_size, l1)
+    _next_states = next_states.reshape(batch_size, l1)
 
     q_values = current(_states)
 
