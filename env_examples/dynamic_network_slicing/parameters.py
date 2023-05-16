@@ -1,7 +1,12 @@
+import os
+#define the working directory
+working_dir = os.path.dirname(os.path.abspath(__file__))
+#define volume directory
+volume_dir = os.path.abspath(os.path.join(working_dir,os.pardir,os.pardir))
 
-TOPOLOGY_FILE = '/home/pcapelo/Desktop/ai_gym_for_networks/env_examples/dynamic_network_slicing/topology.txt'
-DOCKER_VOLUME = '/home/pcapelo/Desktop/ai_gym_for_networks/volume/'
-REQUEST_FILE='/home/pcapelo/Desktop/ai_gym_for_networks/env_examples/dynamic_network_slicing/request_templates.txt'
+TOPOLOGY_FILE = os.path.join(working_dir,'topology.txt')
+DOCKER_VOLUME = os.path.join(volume_dir,'volume/')
+REQUEST_FILE= os.path.join(working_dir,'request_templates.txt')
 NUMBER_SWITCHES = 64
 BASE_STATIONS: int = 7
 COMPUTING_STATIONS: int = 14

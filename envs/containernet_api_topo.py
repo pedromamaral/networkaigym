@@ -110,7 +110,7 @@ class ContainernetAPI:
     def clear_logs(self):
         system(f'sudo rm -f {DOCKER_VOLUME}logs/*.log')
 
-    def add_host(self, name, container_params):
+    def dos(self, name, container_params):
         if name not in self.network.keys():
             system(f'sudo docker rm -f mn.{name}')
             
